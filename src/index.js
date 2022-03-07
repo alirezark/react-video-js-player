@@ -23,11 +23,27 @@ class VideoPlayer extends Component {
         if (this.player) this.player.dispose();
     }
 
+    addTagButton() {
+        const tagButton = videojs.getComments('Button');
+        const concreteTagButton = videojs.extend(tagButton, {
+            constructor: function(player, options) {
+                tagButton.call(this, player, options);
+                this.addClass('vjs-concrete-tag');
+            },
+            handleClick: function() {
+                this.player_.trigger('concreteTag');
+            }
+        });
+
+        this.player.controlBar.addChild(new concreteTagButton());
+    }
+
     init_player(props) {
         const playerOptions = this.generate_player_options(props);
         this.player = videojs(document.querySelector(`#${this.playerId}`), playerOptions);
         this.player.src(props.src)
         this.player.poster(props.poster)
+        this.addTagButton();
         this.set_controls_visibility(this.player, props.hideControls);
     }
 
@@ -86,6 +102,10 @@ class VideoPlayer extends Component {
         this.player.on('ended', () => {
             props.onEnd();
         });
+
+        this.player.on('concreteTag', () => {
+            props.onTag(this.player.currentTime());
+        });
     }
 
     render() {
@@ -136,7 +156,8 @@ VideoPlayer.defaultProps = {
     onTimeUpdate: () => { },
     onSeeking: () => { },
     onSeeked: () => { },
-    onEnd: () => { }
+    onEnd: () => { },
+    onTag: () => {},
 }
 
 
