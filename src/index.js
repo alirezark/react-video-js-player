@@ -67,7 +67,7 @@ class VideoPlayer extends Component {
                 this.props.onTag();
             }
         });
-        this.player.addTagButton(tagButton);
+        this.player.addChild(tagButton);
 
 
 
@@ -158,11 +158,12 @@ VideoPlayer.propTypes = {
     onPause: PropTypes.func,
     onTimeUpdate: PropTypes.func,
     onSeeking: PropTypes.func,
+    onTag: PropTypes.func,
     onSeeked: PropTypes.func,
     onEnd: PropTypes.func,
     playbackRates: PropTypes.arrayOf(PropTypes.number),
     hidePlaybackRates: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
 }
 
 VideoPlayer.defaultProps = {
