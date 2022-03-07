@@ -24,18 +24,29 @@ class VideoPlayer extends Component {
     }
 
     addTagButton() {
-        const tagButton = videojs.getComments('Button');
-        const concreteTagButton = videojs.extend(tagButton, {
-            constructor: function(player, options) {
-                tagButton.call(this, player, options);
-                this.addClass('vjs-concrete-tag');
-            },
-            handleClick: function() {
-                this.player_.trigger('concreteTag');
+        const TagButton = videojs.getComponent('Button');
+        const tagButton = new TagButton(this.player, {
+            text: 'Add tag',
+            className: 'vjs-tag-button',
+            controlText: 'Tag',
+            role: 'button',
+            ariaLabel: 'Tag',
+            clickHandler: () => {
+                this.props.onTag();
             }
         });
-
-        this.player.controlBar.addChild(new concreteTagButton());
+        this.player.addTagButton(tagButton);
+        // const concreteTagButton = videojs.extend(tagButton, {
+        //     constructor: function(player, options) {
+        //         tagButton.call(this, player, options);
+        //         this.addClass('vjs-concrete-tag');
+        //     },
+        //     handleClick: function() {
+        //         this.player_.trigger('concreteTag');
+        //     }
+        // });
+        //
+        // this.player.controlBar.addChild(new concreteTagButton());
     }
 
     init_player(props) {
