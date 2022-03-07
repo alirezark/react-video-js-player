@@ -71,7 +71,7 @@ class VideoPlayer extends Component {
 
         var Component = videojs.getComponent('Component');
         var myComponent = new Component(this.player);
-        var myButton = myComponent.addChild('tagButton', {
+        var myButton = myComponent.addChild('MyButton', {
             text: 'Press Me',
             className: 'tag-button',
             tagButton: {
