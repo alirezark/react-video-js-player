@@ -54,7 +54,23 @@ class VideoPlayer extends Component {
         this.player = videojs(document.querySelector(`#${this.playerId}`), playerOptions);
         this.player.src(props.src)
         this.player.poster(props.poster)
-        this.addTagButton();
+
+
+        const TagButton = videojs.getComponent('Button');
+        const tagButton = new TagButton(this.player, {
+            text: 'Add tag',
+            className: 'vjs-tag-button',
+            controlText: 'Tag',
+            role: 'button',
+            ariaLabel: 'Tag',
+            clickHandler: () => {
+                this.props.onTag();
+            }
+        });
+        this.player.addTagButton(tagButton);
+
+
+
         this.set_controls_visibility(this.player, props.hideControls);
     }
 
